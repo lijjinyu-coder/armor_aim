@@ -1,0 +1,14 @@
+# 构建产物
+build/
+
+# 运行输出
+output/
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.user
+
+# 系统文件
+Thumbs.db
+.DS_Store
