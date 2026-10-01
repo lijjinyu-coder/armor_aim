@@ -1,0 +1,24 @@
+# 自瞄仓库提交历史（--all --decorate）
+
+ebe6f89 (HEAD -> feature/simulator-integration, tag: sim-closed-loop-v1) feat(demo): dedicated acceptance recording showing the full closed-loop narrative
+e69c0b9 docs(demo): combined demo video with Chinese title cards and full demo material set
+c3de0da docs+test(sim): motion scenarios pass; complete the scenario record
+5c91649 feat(sim): verified static closed loop; automation and evidence
+20daa70 feat(aim_output): closed-loop control gain and deadband (fixes observed overshoot)
+bbe8357 test: offline verification that the closed-loop control law is exact and convergent
+f1ea91a feat(sim): demo video assembler (title cards + concatenated segments)
+f048254 test+chore: player-movement scenario, ROS-free logic test script, tidy imports
+347f95d feat(launch): single-entry autoaim.py that switches input source by launch argument
+e3c93ba docs: task-doc requirement-by-requirement completion report
+0e1e4f5 feat(aim_output): optional command slew-rate limit to keep the closed loop stable
+244fb67 fix(aim_output): draw keypoints with the real detector frame size; add demo material plan
+b8ab652 docs+feat(sim): measured interface/calibration records, detector tuning args, simulator fix patch
+d205811 feat(sim): reproducible build/run/record scripts and integration README
+dc1aa1f feat(sim): parameterise camera/armor params, add aim_output abstraction and sim launch
+ab46a87 (master) chore: baseline of auto-aiming before simulator integration
+
+
+# 仿真器提交历史
+
+3a84d07 fix(ros2): make the ros2 feature build and stop capture_rune panicking
+0536224 chore: upstream baseline of bevy_robomaster_simulator

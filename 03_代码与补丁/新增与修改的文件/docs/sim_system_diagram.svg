@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="620" viewBox="0 0 1180 620">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#1f4e79"/>
+    </marker>
+    <marker id="arrowR" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#a03030"/>
+    </marker>
+    <style>
+      .box   { fill:#eef4fb; stroke:#1f4e79; stroke-width:1.6; rx:8; }
+      .sim   { fill:#fdf1e3; stroke:#b06a1f; stroke-width:1.6; rx:8; }
+      .out   { fill:#eefaf0; stroke:#1f7a3d; stroke-width:1.6; rx:8; }
+      .t     { font-family:"DejaVu Sans",Arial,sans-serif; font-size:14px; fill:#12263a; }
+      .tb    { font-family:"DejaVu Sans",Arial,sans-serif; font-size:15px; font-weight:bold; fill:#12263a; }
+      .s     { font-family:"DejaVu Sans",Arial,sans-serif; font-size:12px; fill:#40566b; }
+      .lbl   { font-family:"DejaVu Sans",Arial,sans-serif; font-size:12px; fill:#1f4e79; }
+      .lblr  { font-family:"DejaVu Sans",Arial,sans-serif; font-size:12px; fill:#a03030; }
+      .ln    { stroke:#1f4e79; stroke-width:1.8; fill:none; marker-end:url(#arrow); }
+      .lnr   { stroke:#a03030; stroke-width:1.8; fill:none; marker-end:url(#arrowR);
+               stroke-dasharray:6,4; }
+      .title { font-family:"DejaVu Sans",Arial,sans-serif; font-size:19px; font-weight:bold; fill:#12263a; }
+      .layer { font-family:"DejaVu Sans",Arial,sans-serif; font-size:13px; fill:#6b7c8c; }
+    </style>
+  </defs>
+
+  <text class="title" x="30" y="34">自瞄仿真接入 —— 系统数据流（箭头方向 = 数据流向）</text>
+
+  <!-- layer hints -->
+  <text class="layer" x="30" y="70">输入层</text>
+  <text class="layer" x="330" y="70">核心算法层（与真机一致，未因仿真改动）</text>
+  <text class="layer" x="845" y="70">输出抽象层</text>
+  <text class="layer" x="30" y="440">仿真器 / 真机</text>
+
+  <!-- input layer -->
+  <rect class="box" x="30" y="82" width="250" height="60"/>
+  <text class="tb"  x="45" y="108">仿真器虚拟相机</text>
+  <text class="s"   x="45" y="128">/image_raw (rgb8) + /camera_info</text>
+
+  <rect class="box" x="30" y="164" width="250" height="60"/>
+  <text class="tb"  x="45" y="190">视频文件 / USB 相机</text>
+  <text class="s"   x="45" y="210">webcam_publisher (bgr8)</text>
+
+  <!-- algorithm layer -->
+  <rect class="box" x="330" y="82" width="250" height="66"/>
+  <text class="tb"  x="345" y="108">装甲板检测</text>
+  <text class="s"   x="345" y="128">opencv_armor_detector → /key_points</text>
+
+  <rect class="box" x="330" y="166" width="250" height="66"/>
+  <text class="tb"  x="345" y="192">PnP 解算 + 有效性过滤</text>
+  <text class="s"   x="345" y="212">pose_estimator → /predicted_armor</text>
+
+  <!-- output layer -->
+  <rect class="out" x="845" y="82" width="300" height="66"/>
+  <text class="tb"  x="860" y="108">调试输出</text>
+  <text class="s"   x="860" y="128">日志 + /debug_image（yaw/pitch/dist/FPS/状态）</text>
+
+  <rect class="out" x="845" y="166" width="300" height="66"/>
+  <text class="tb"  x="860" y="192">ROS2 云台输出</text>
+  <text class="s"   x="860" y="212">/rm_gimbal/cmd（绝对角/度, BestEffort）</text>
+
+  <!-- AimResult -->
+  <rect class="out" x="620" y="124" width="185" height="66"/>
+  <text class="tb"  x="632" y="150">AimResult</text>
+  <text class="s"   x="632" y="170">yaw/pitch/dist/valid</text>
+
+  <!-- simulator / plant -->
+  <rect class="sim" x="330" y="300" width="530" height="76"/>
+  <text class="tb"  x="345" y="328">仿真器云台 PID + 场景渲染</text>
+  <text class="s"   x="345" y="350">kp=50/kd=0.1, pitch 限幅 ±45°, 需按 F5 开启自瞄订阅</text>
+  <text class="s"   x="345" y="368">→ 云台转动 → 新的相机画面（闭环）</text>
+
+  <!-- arrows: inputs -> detector -->
+  <path class="ln" d="M280,112 L330,112"/>
+  <path class="ln" d="M280,194 L305,194 L305,120 L330,120"/>
+  <text class="lbl" x="286" y="104">图像</text>
+
+  <!-- detector -> estimator -->
+  <path class="ln" d="M455,148 L455,166"/>
+  <text class="lbl" x="462" y="163">key_points</text>
+
+  <!-- estimator -> AimResult -->
+  <path class="ln" d="M580,199 L600,199 L600,157 L620,157"/>
+  <text class="lbl" x="586" y="188">predicted_armor</text>
+
+  <!-- AimResult -> outputs -->
+  <path class="ln" d="M805,146 L845,115"/>
+  <path class="ln" d="M805,168 L845,199"/>
+
+  <!-- gimbal output -> simulator -->
+  <path class="lnr" d="M995,232 L995,300"/>
+  <text class="lblr" x="1002" y="272">/rm_gimbal/cmd</text>
+  <text class="lblr" x="1002" y="290">（绝对角/度）</text>
+
+  <!-- simulator -> camera (closed loop) -->
+  <path class="lnr" d="M330,338 L155,338 L155,142"/>
+  <text class="lblr" x="163" y="300">新画面（闭环反馈）</text>
+
+  <!-- legend -->
+  <rect x="30" y="470" width="1120" height="120" fill="#fbfcfd" stroke="#c8d4e0"/>
+  <text class="tb" x="45" y="496">说明</text>
+  <text class="t"  x="45" y="520">1) 实线 = 图像/中间结果链路；红色虚线 = 云台命令与闭环反馈（任务书要求的方向标注）。</text>
+  <text class="t"  x="45" y="544">2) 输入层可切换（视频文件 或 仿真器实时图像），核心算法不感知来源；输出层可扩展（调试输出 / ROS2 云台输出）。</text>
+  <text class="t"  x="45" y="568">3) 目标丢失或图像中断时，输出层发 distance=-1（仿真器"无解"哨兵）→ 云台停止驱动并保持姿态，不使用过期目标。</text>
+</svg>

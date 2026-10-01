@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>aim_output</name>
+  <version>0.1.0</version>
+  <description>
+    Output abstraction for the auto-aiming suite: turns the unified AimResult into
+    (a) debug logging/imagery and (b) ROS2 gimbal commands for the RoboMaster simulator
+    (/rm_gimbal/cmd, absolute angles in degrees, sensor-data QoS, watchdog on target loss).
+  </description>
+  <maintainer email="user@example.com">user</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
+  <exec_depend>rm_interfaces</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
